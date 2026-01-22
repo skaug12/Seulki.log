@@ -1,0 +1,35 @@
+# 환경 변수 파일 (API 키 포함)
+.env
+
+# Python 캐시
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# 가상환경
+venv/
+env/
+ENV/
+.venv
+
+# IDE 설정
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 출력 파일
+*.json
+*.csv
+*.xlsx
+!requirements.txt
+
+# OS 관련
+.DS_Store
+Thumbs.db
+
+# 로그
+*.log
