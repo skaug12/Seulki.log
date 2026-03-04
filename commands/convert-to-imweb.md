@@ -10,7 +10,7 @@ Obsidian 마크다운(.md) 파일을 읽어 Imweb NOTE 게시판에 붙여넣을
 
 예시:
 ```
-/convert-to-imweb /Users/sklee/hfk-imweb/note/공지/2026 봄시즌 레터 #1. 시즌 오픈.md
+/convert-to-imweb note/공지/2026 봄시즌 레터 #1. 시즌 오픈.md
 ```
 
 - 파일경로: 변환할 Obsidian .md 파일의 절대경로
@@ -114,6 +114,6 @@ AskUserQuestion으로 출력 방식을 확인합니다:
 
 - Imweb 에디터는 Froala 기반이므로 `class="fr-fic fr-dii"` 속성이 이미지에 필요할 수 있음
 - 기존 HTML이 포함된 파일(예: `status: draft` 레터)은 HTML 모드로 자동 처리되어 변환 없이 추출만 수행
-- 변환 참조 형식: `/Users/sklee/hfk-imweb/note/공지/2025 겨울시즌 레터 #11.md`
+- 변환 참조 형식: `note/공지/2025 겨울시즌 레터 #11.md`
 
 $ARGUMENTS
