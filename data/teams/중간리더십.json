@@ -1,0 +1,87 @@
+{
+  "no": 154,
+  "categories": [
+    "s20250803f83d0f5567d99"
+  ],
+  "custom_prod_code": null,
+  "name": "중간리더십",
+  "content": "<p><img src=\"https://cdn.jsdelivr.net/gh/skleehfk/hfk-images@main/25FallTeamPageMidV22.png\" alt=\"25FallDescriptionEditorv2 이미지\" class=\"fr-fic fr-dii\"></p>",
+  "content_plain": "[25FallDescriptionEditorv2 이미지]",
+  "simple_content": "<p><img src=\"https://cdn.jsdelivr.net/gh/skleehfk/hfk-images@main/25FallDescriptionLeadership.png\" alt=\"25FallDescriptionLeadership 이미지\" class=\"fr-fic fr-dii\"></p>",
+  "simple_content_plain": "[25FallDescriptionLeadership 이미지]",
+  "use_mobile_prod_content": true,
+  "mobile_content": "<p><img src=\"https://cdn.jsdelivr.net/gh/skleehfk/hfk-images@main/MoMid.png\" alt=\"25FallDescriptionEditorv2 이미지\" class=\"fr-fic fr-dii\"></p>",
+  "mobile_content_plain": "[25FallDescriptionEditorv2 이미지]",
+  "prod_status": "nosale",
+  "images": [
+    "f202508035c740ecab8f26"
+  ],
+  "image_url": {
+    "f202508035c740ecab8f26": "S20240629fee25a0bc999e/3101a9feb04f6.png"
+  },
+  "prod_type": "normal",
+  "use_pre_sale": false,
+  "digital_prod_data": null,
+  "price": 590000,
+  "price_tax": true,
+  "price_none": false,
+  "point": {
+    "type": "common"
+  },
+  "product_discount_options": [
+    "coupon",
+    "point",
+    "shopping_group_dc"
+  ],
+  "period_discount_data": [],
+  "weight": "0",
+  "stock": {
+    "stock_use": true,
+    "stock_unlimit": false,
+    "stock_no_option": 10,
+    "sku_no_option": ""
+  },
+  "origin": "",
+  "maker": "",
+  "brand": "",
+  "badge": {
+    "new": true,
+    "best": false,
+    "md": false,
+    "hot": true,
+    "delivery": false
+  },
+  "seo": {
+    "title": {
+      "u20240629667fd4ee4333c": null
+    },
+    "desc": {
+      "u20240629667fd4ee4333c": null
+    },
+    "access_bot": true
+  },
+  "sync": {
+    "pay_product_name": "",
+    "event_words": "",
+    "naver_category": "",
+    "product_flag": "소매",
+    "product_condition": "신상품",
+    "import_flag": false,
+    "parallel_import": false,
+    "is_culture_benefit": false,
+    "order_made": false
+  },
+  "etc": {
+    "minimum_purchase_quantity": 0,
+    "maximum_purchase_quantity": 0,
+    "member_maximum_purchase_quantity": 0,
+    "optional_limit_type": "relative",
+    "use_unipass_number": "default",
+    "adult": false
+  },
+  "prodinfo": [],
+  "is_exist_options": "N",
+  "is_mix": "Y",
+  "add_time": 1754215620,
+  "edit_time": 1756546065
+}

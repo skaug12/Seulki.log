@@ -1,0 +1,87 @@
+{
+  "no": 139,
+  "categories": [
+    "s202508038c8dc9c703c87"
+  ],
+  "custom_prod_code": null,
+  "name": "DBR리딩",
+  "content": "<p><img src=\"https://cdn.jsdelivr.net/gh/skleehfk/hfk-images@main/25FallTeamPage.png\" alt=\"DBR리딩\" class=\"fr-fic fr-dii\"></p>",
+  "content_plain": "[DBR리딩]",
+  "simple_content": "<p><img src=\"https://cdn.jsdelivr.net/gh/skleehfk/hfk-images@main/25FallDescriptionDBR.png\" alt=\"25FallDescriptionDBR 이미지\" class=\"fr-fic fr-dii\"></p>",
+  "simple_content_plain": "[25FallDescriptionDBR 이미지]",
+  "use_mobile_prod_content": true,
+  "mobile_content": "<p><img src=\"https://cdn.jsdelivr.net/gh/skleehfk/hfk-images@main/Mo.png\" alt=\"DBR리딩\" class=\"fr-fic fr-dii\"></p>",
+  "mobile_content_plain": "[DBR리딩]",
+  "prod_status": "sale",
+  "images": [
+    "f2025081015641b5e9b891"
+  ],
+  "image_url": {
+    "f2025081015641b5e9b891": "S20240629fee25a0bc999e/995244dc5c5de.png"
+  },
+  "prod_type": "normal",
+  "use_pre_sale": false,
+  "digital_prod_data": null,
+  "price": 590000,
+  "price_tax": true,
+  "price_none": false,
+  "point": {
+    "type": "common"
+  },
+  "product_discount_options": [
+    "coupon",
+    "point",
+    "shopping_group_dc"
+  ],
+  "period_discount_data": [],
+  "weight": "0",
+  "stock": {
+    "stock_use": true,
+    "stock_unlimit": false,
+    "stock_no_option": 0,
+    "sku_no_option": ""
+  },
+  "origin": "",
+  "maker": "",
+  "brand": "",
+  "badge": {
+    "new": false,
+    "best": true,
+    "md": true,
+    "hot": false,
+    "delivery": false
+  },
+  "seo": {
+    "title": {
+      "u20240629667fd4ee4333c": null
+    },
+    "desc": {
+      "u20240629667fd4ee4333c": null
+    },
+    "access_bot": true
+  },
+  "sync": {
+    "pay_product_name": "",
+    "event_words": "",
+    "naver_category": "",
+    "product_flag": "소매",
+    "product_condition": "신상품",
+    "import_flag": false,
+    "parallel_import": false,
+    "is_culture_benefit": false,
+    "order_made": false
+  },
+  "etc": {
+    "minimum_purchase_quantity": 0,
+    "maximum_purchase_quantity": 0,
+    "member_maximum_purchase_quantity": 0,
+    "optional_limit_type": "relative",
+    "use_unipass_number": "default",
+    "adult": false
+  },
+  "prodinfo": [],
+  "is_exist_options": "N",
+  "is_mix": "Y",
+  "add_time": 1745664920,
+  "edit_time": 1757932818
+}
