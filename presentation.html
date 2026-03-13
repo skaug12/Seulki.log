@@ -121,7 +121,7 @@
   <div style="display:flex; flex-direction:column; justify-content:center; height:100%; text-align:center;">
     <h1>Claude Code<br>활용 가이드</h1>
     <p style="font-size:0.78em; color:var(--accent); font-weight:400; margin-top:16px;">커스텀 스킬로 만드는 나만의 AI 업무 자동화</p>
-    <p class="dim" style="font-size:0.56em; margin-top:12px;">실제 운영 사례와 함께 보는 25개 스킬 이야기</p>
+    <p class="dim" style="font-size:0.56em; margin-top:12px;">실제 운영 사례와 함께 보는 32개 스킬 이야기</p>
     <p class="dim" style="font-size:0.46em; margin-top:40px;">Seulki.log</p>
   </div>
 </section>
@@ -149,7 +149,7 @@
     <div class="card">
       <p class="accent4 bold">2025~</p>
       <h3>Claude Code 도입</h3>
-      <p class="dim">커뮤니티 운영 업무를 25개 커스텀 스킬로 자동화</p>
+      <p class="dim">커뮤니티 운영 업무를 32개 커스텀 스킬로 자동화</p>
     </div>
   </div>
   <div class="summary-card">
@@ -292,11 +292,11 @@
 <section>
   <div class="label">Case Study</div>
   <h2>HFK 커뮤니티 운영 자동화</h2>
-  <p style="margin-bottom:16px;">오프라인 학습 커뮤니티의 운영 업무를 25개 스킬로 자동화한 사례입니다.</p>
+  <p style="margin-bottom:16px;">오프라인 학습 커뮤니티의 운영 업무를 32개 스킬로 자동화한 사례입니다.</p>
   <div class="grid" style="grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:0; align-items:center; margin-bottom:18px;">
     <div class="flow-item"><p class="accent2 bold" style="font-size:0.58em;">Obsidian</p><p class="dim">콘텐츠 관리</p></div>
     <div class="flow-arrow">&rarr;</div>
-    <div class="flow-item" style="background:rgba(139,94,60,0.08);"><p class="accent bold" style="font-size:0.58em;">Claude Code</p><p class="dim">25개 스킬</p></div>
+    <div class="flow-item" style="background:rgba(139,94,60,0.08);"><p class="accent bold" style="font-size:0.58em;">Claude Code</p><p class="dim">32개 스킬</p></div>
     <div class="flow-arrow">&rarr;</div>
     <div class="flow-item"><p class="accent3 bold" style="font-size:0.58em;">아임웹</p><p class="dim">쇼핑몰</p></div>
     <div class="flow-arrow">&rarr;</div>
@@ -304,11 +304,11 @@
   </div>
   <div class="grid grid-3" style="gap:18px;">
     <div class="card"><span class="category-tag cat-blue">상품 관리 5</span><p class="dim">sync, backup, evaluate, expand, convert</p></div>
-    <div class="card"><span class="category-tag cat-brown">콘텐츠 생성 3</span><p class="dim">letter, review, certificate</p></div>
+    <div class="card"><span class="category-tag cat-brown">콘텐츠 생성 7</span><p class="dim">letter, event-review, team-review, certificate, handout, draft, convert-html</p></div>
     <div class="card"><span class="category-tag cat-green">일정 · 소통 5</span><p class="dim">schedule, notices, daily, reminder, slack</p></div>
-    <div class="card"><span class="category-tag cat-purple">이미지 관리 3</span><p class="dim">categorize (general, hfk, imweb)</p></div>
+    <div class="card"><span class="category-tag cat-purple">이미지 관리 2</span><p class="dim">categorize (hfk, imweb)</p></div>
     <div class="card"><span class="category-tag cat-red">운영 에이전트 5</span><p class="dim">season, product, content, daily, image</p></div>
-    <div class="card"><span class="category-tag cat-teal">시스템 4</span><p class="dim">save, skill-guide, ga-report</p></div>
+    <div class="card"><span class="category-tag cat-teal">분석 · 시스템 8</span><p class="dim">analyze-slack, attendance, backup-notes, ga-report, color-guide, save, skill-guide</p></div>
   </div>
 </section>
 
@@ -344,18 +344,36 @@
 <section>
   <div class="label">Skills &mdash; 콘텐츠 생성</div>
   <h2>콘텐츠 생성 스킬</h2>
-  <div class="grid" style="grid-template-columns:1fr; gap:20px;">
-    <div class="card" style="display:grid; grid-template-columns:180px 1fr; gap:24px; align-items:center;">
-      <div><span class="skill-tag">/generate-letter</span><h3>시즌레터 자동 생성</h3></div>
-      <ul style="margin:0;"><li>Obsidian 레터 템플릿 기반 시즌레터 HTML 생성</li><li>Google Calendar에서 팀 세션 일정 자동 조회</li></ul>
+  <div class="grid grid-2" style="gap:20px;">
+    <div class="card">
+      <span class="skill-tag">/generate-letter</span>
+      <h3>시즌레터 자동 생성</h3>
+      <ul><li>Obsidian 레터 템플릿 기반 HTML 생성</li><li>Google Calendar에서 팀 세션 일정 자동 조회</li></ul>
     </div>
-    <div class="card" style="display:grid; grid-template-columns:180px 1fr; gap:24px; align-items:center;">
-      <div><span class="skill-tag" style="background:rgba(61,90,128,0.08); color:var(--accent2);">/generate-review</span><h3>이벤트 후기 생성</h3></div>
-      <ul style="margin:0;"><li>녹취 텍스트 기반 2,000~3,000자 후기 자동 작성</li><li>북토크, 스페셜 토크, AAR 밋업 등 유형별 구분</li></ul>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(61,90,128,0.08); color:var(--accent2);">/generate-event-review</span>
+      <h3>이벤트 후기 생성</h3>
+      <ul><li>녹취 텍스트 기반 2,000~3,000자 후기 작성</li><li>북토크, 스페셜 토크, AAR 밋업 등 유형별</li></ul>
     </div>
-    <div class="card" style="display:grid; grid-template-columns:180px 1fr; gap:24px; align-items:center;">
-      <div><span class="skill-tag" style="background:rgba(91,123,94,0.08); color:var(--accent3);">/generate-certificate</span><h3>수강확인증 생성</h3></div>
-      <ul style="margin:0;"><li>수강생 정보 &rarr; 아임웹에서 세션 정보 자동 파싱</li><li>Google Sheets 템플릿 수정 &rarr; PDF 자동 다운로드</li></ul>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(91,123,94,0.08); color:var(--accent3);">/generate-team-review</span>
+      <h3>팀 활동 후기 생성</h3>
+      <ul><li>녹취 텍스트 기반 팀 활동 후기 자동 작성</li><li>팀별 세션 내용과 분위기 반영</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(123,107,138,0.08); color:var(--accent4);">/generate-certificate</span>
+      <h3>수강확인증 생성</h3>
+      <ul><li>아임웹에서 세션 정보 자동 파싱</li><li>Google Sheets &rarr; PDF 자동 다운로드</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(138,94,94,0.08); color:var(--accent5);">/generate-handout</span>
+      <h3>세션 핸드아웃 생성</h3>
+      <ul><li>날짜 입력 시 해당 세션 A4 핸드아웃 PDF 생성</li><li>팀별 세션 정보 자동 조회 후 다운로드</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(90,123,123,0.08); color:var(--accent6);">/draft-from-recording</span>
+      <h3>녹음 &rarr; 콘텐츠 초안</h3>
+      <ul><li>클로버노트 녹취 텍스트에서 리뷰 초안 생성</li><li>녹음 파일 &rarr; 구조화된 콘텐츠로 변환</li></ul>
     </div>
   </div>
 </section>
@@ -395,14 +413,30 @@
   </div>
 </section>
 
-<!-- ===== 11: IMAGE & AGENT ===== -->
+<!-- ===== 11: IMAGE · ANALYSIS · SYSTEM ===== -->
 <section>
-  <div class="label">Skills &mdash; 이미지 · 에이전트</div>
-  <h2>이미지 관리 & 운영 에이전트</h2>
-  <div class="card" style="margin-bottom:16px;">
-    <div style="display:grid; grid-template-columns:180px 1fr; gap:24px; align-items:center;">
-      <div><span class="skill-tag" style="background:rgba(123,107,138,0.08); color:var(--accent4);">/categorize-images</span><h3>이미지 자동 분류</h3></div>
-      <p class="sub" style="margin:0;">Claude Vision으로 이미지를 분석하여 팀 분위기에 맞게 분류 · 리사이즈 + EXIF 추출 · 캘린더 기반 이벤트 사진 분류</p>
+  <div class="label">Skills &mdash; 이미지 · 분석 · 시스템</div>
+  <h2>이미지 · 분석 · 시스템 스킬</h2>
+  <div class="grid grid-2" style="gap:20px; margin-bottom:16px;">
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(123,107,138,0.08); color:var(--accent4);">/categorize-images</span>
+      <h3>이미지 자동 분류</h3>
+      <ul><li>Claude Vision으로 이미지 분석 후 팀별 분류</li><li>리사이즈 + EXIF 추출 · 캘린더 기반 분류</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(90,123,123,0.08); color:var(--accent6);">/analyze-slack</span>
+      <h3>Slack 워크스페이스 분석</h3>
+      <ul><li>Slack API로 메시지 수집 후 구조·시계열 분석</li><li>분석 결과를 Obsidian MD 파일로 저장</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(91,123,94,0.08); color:var(--accent3);">/manage-attendance</span>
+      <h3>출석 관리</h3>
+      <ul><li>Google Sheets 출석 스프레드시트 자동 관리</li><li>시즌별 출석 현황 조회 및 업데이트</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(138,94,94,0.08); color:var(--accent5);">/backup-notes</span>
+      <h3>NOTE 백업</h3>
+      <ul><li>thehfk.org NOTE 게시판 글을 Obsidian에 백업</li><li>웹 콘텐츠를 Markdown으로 자동 변환</li></ul>
     </div>
   </div>
   <p class="accent5 bold" style="font-size:0.58em; margin-bottom:14px;">에이전트 스킬 &mdash; 여러 스킬을 하나의 워크플로우로 연결</p>
@@ -634,7 +668,7 @@
     });
   });
 
-  var skillNames = {6:'Skills — Overview', 7:'Skills — 상품', 8:'Skills — 콘텐츠', 9:'Skills — 일정·소통', 10:'Skills — 이미지·Agent', 11:'Skills — Workflow'};
+  var skillNames = {6:'Skills — Overview', 7:'Skills — 상품', 8:'Skills — 콘텐츠', 9:'Skills — 일정·소통', 10:'Skills — 이미지·분석·시스템', 11:'Skills — Workflow'};
 
   function updateProgress() {
     var idx = Reveal.getIndices().h;
