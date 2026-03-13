@@ -1,23 +1,41 @@
-# 환경 변수
+# 환경 변수 파일 (API 키 포함)
 .env
 
-# Python
+# Python 캐시
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+
+# 가상환경
 venv/
-.venv/
+env/
+ENV/
+.venv
 
-# OS
-.DS_Store
-Thumbs.db
-
-# IDE
+# IDE 설정
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+
+# 출력 파일
+*.json
+*.csv
+*.xlsx
+!requirements.txt
+
+# Claude Code 로컬 설정
+.claude/
+
+# Obsidian 설정
+.obsidian/
+
+# OS 관련
+.DS_Store
+Thumbs.db
 
 # 로그
 *.log

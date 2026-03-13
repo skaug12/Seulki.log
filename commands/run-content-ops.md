@@ -10,15 +10,14 @@
 
 ## 실행 워크플로우
 
-### Step 1: 녹취 기반 후기 생성 (generate-review)
+### Step 1: 녹취 기반 후기 생성 (generate-event-review 또는 generate-team-review)
 
 1. $ARGUMENTS에서 녹취 파일 경로를 확인합니다
-2. 녹취 텍스트를 읽고 이벤트 유형을 자동 추론합니다
-   - 북토크, 스페셜 토크, AAR 밋업, PEST 브리핑, 브랜드 토크, 시즌 브리핑
-3. HFK 작성 원칙에 따라 후기를 생성합니다:
-   - 3인칭 관찰자 시점
-   - 2,000~3,000자 분량
-4. `note/리뷰/` 에 Markdown 파일로 저장
+2. 사용자에게 리뷰 유형을 질문합니다:
+   - **이벤트 리뷰** → `/generate-event-review` 실행
+   - **팀 리뷰** → `/generate-team-review` 실행
+3. HFK 작성 원칙에 따라 후기를 생성합니다
+4. `$HFK_VAULT/note/리뷰/` 에 Markdown 파일로 저장
 
 **사용자 확인**: 생성된 후기 내용 검토
 
