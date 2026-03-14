@@ -39,7 +39,8 @@
   .reveal ol { padding-left: 18px; }
   .reveal ol li { padding-left: 4px; }
   .reveal ol li::before { display: none; }
-  .reveal section { text-align: left; padding: 36px 60px 56px !important; box-sizing: border-box; }
+  .reveal section { text-align: left; padding: 36px 60px 56px !important; box-sizing: border-box; overflow: hidden; }
+  .reveal .slides section:not(.present) { opacity: 0 !important; visibility: hidden !important; }
   .reveal code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.88em; }
   .reveal .slides { text-align: left; }
   .reveal .slide-number { font-family: 'Pretendard'; font-size: 11px; color: var(--text-dim); }
@@ -348,32 +349,32 @@
     <div class="card">
       <span class="skill-tag">/generate-letter</span>
       <h3>시즌레터 자동 생성</h3>
-      <ul><li>Obsidian 레터 템플릿 기반 HTML 생성</li><li>Google Calendar에서 팀 세션 일정 자동 조회</li></ul>
+      <p class="dim">Obsidian 템플릿 + Calendar 일정 기반 HTML 생성</p>
     </div>
     <div class="card">
       <span class="skill-tag" style="background:rgba(61,90,128,0.08); color:var(--accent2);">/generate-event-review</span>
       <h3>이벤트 후기 생성</h3>
-      <ul><li>녹취 텍스트 기반 2,000~3,000자 후기 작성</li><li>북토크, 스페셜 토크, AAR 밋업 등 유형별</li></ul>
+      <p class="dim">녹취 텍스트 기반 2,000~3,000자 유형별 후기</p>
     </div>
     <div class="card">
       <span class="skill-tag" style="background:rgba(91,123,94,0.08); color:var(--accent3);">/generate-team-review</span>
       <h3>팀 활동 후기 생성</h3>
-      <ul><li>녹취 텍스트 기반 팀 활동 후기 자동 작성</li><li>팀별 세션 내용과 분위기 반영</li></ul>
+      <p class="dim">녹취 텍스트 기반 팀별 세션 내용·분위기 반영</p>
     </div>
     <div class="card">
       <span class="skill-tag" style="background:rgba(123,107,138,0.08); color:var(--accent4);">/generate-certificate</span>
       <h3>수강확인증 생성</h3>
-      <ul><li>아임웹에서 세션 정보 자동 파싱</li><li>Google Sheets &rarr; PDF 자동 다운로드</li></ul>
+      <p class="dim">아임웹 파싱 &rarr; Google Sheets &rarr; PDF 다운로드</p>
     </div>
     <div class="card">
       <span class="skill-tag" style="background:rgba(138,94,94,0.08); color:var(--accent5);">/generate-handout</span>
       <h3>세션 핸드아웃 생성</h3>
-      <ul><li>날짜 입력 시 해당 세션 A4 핸드아웃 PDF 생성</li><li>팀별 세션 정보 자동 조회 후 다운로드</li></ul>
+      <p class="dim">날짜 입력 시 팀별 세션 A4 핸드아웃 PDF 생성</p>
     </div>
     <div class="card">
       <span class="skill-tag" style="background:rgba(90,123,123,0.08); color:var(--accent6);">/draft-from-recording</span>
       <h3>녹음 &rarr; 콘텐츠 초안</h3>
-      <ul><li>클로버노트 녹취 텍스트에서 리뷰 초안 생성</li><li>녹음 파일 &rarr; 구조화된 콘텐츠로 변환</li></ul>
+      <p class="dim">클로버노트 녹취 &rarr; 구조화된 콘텐츠로 변환</p>
     </div>
   </div>
 </section>
@@ -439,13 +440,20 @@
       <ul><li>thehfk.org NOTE 게시판 글을 Obsidian에 백업</li><li>웹 콘텐츠를 Markdown으로 자동 변환</li></ul>
     </div>
   </div>
-  <p class="accent5 bold" style="font-size:0.58em; margin-bottom:14px;">에이전트 스킬 &mdash; 여러 스킬을 하나의 워크플로우로 연결</p>
-  <div class="grid grid-5" style="gap:18px;">
-    <div class="card" style="padding:18px;"><p class="accent3 bold">/run-season-ops</p><p class="bold" style="color:var(--text);">시즌 운영</p><p class="dim">일정 &rarr; 동기화 &rarr; 레터 &rarr; Slack</p></div>
-    <div class="card" style="padding:18px;"><p class="accent2 bold">/run-product-ops</p><p class="bold" style="color:var(--text);">상품 관리</p><p class="dim">백업 &rarr; 평가 &rarr; 보완 &rarr; 동기화</p></div>
-    <div class="card" style="padding:18px;"><p class="accent bold">/run-content-ops</p><p class="bold" style="color:var(--text);">콘텐츠 제작</p><p class="dim">후기 생성 &rarr; HTML 변환</p></div>
-    <div class="card" style="padding:18px;"><p class="accent4 bold">/run-daily</p><p class="bold" style="color:var(--text);">데일리</p><p class="dim">기록 &rarr; 미리알림 &rarr; 요약</p></div>
-    <div class="card" style="padding:18px;"><p class="accent5 bold">/run-image-ops</p><p class="bold" style="color:var(--text);">이미지</p><p class="dim">확인 &rarr; 선택 &rarr; 분류</p></div>
+
+</section>
+
+<!-- ===== 11b: AGENT SKILLS ===== -->
+<section>
+  <div class="label">Skills &mdash; 운영 에이전트</div>
+  <h2>에이전트 스킬</h2>
+  <p style="margin-bottom:18px;">여러 스킬을 하나의 워크플로우로 연결하여 복합 업무를 자동 실행합니다.</p>
+  <div class="grid grid-3" style="gap:20px;">
+    <div class="card"><p class="accent3 bold">/run-season-ops</p><h3>시즌 운영</h3><p class="dim">일정 &rarr; 동기화 &rarr; 레터 &rarr; Slack</p></div>
+    <div class="card"><p class="accent2 bold">/run-product-ops</p><h3>상품 관리</h3><p class="dim">백업 &rarr; 평가 &rarr; 보완 &rarr; 동기화</p></div>
+    <div class="card"><p class="accent bold">/run-content-ops</p><h3>콘텐츠 제작</h3><p class="dim">후기 생성 &rarr; HTML 변환</p></div>
+    <div class="card"><p class="accent4 bold">/run-daily</p><h3>데일리</h3><p class="dim">기록 &rarr; 미리알림 &rarr; 요약</p></div>
+    <div class="card"><p class="accent5 bold">/run-image-ops</p><h3>이미지</h3><p class="dim">확인 &rarr; 선택 &rarr; 분류</p></div>
   </div>
 </section>
 
@@ -635,10 +643,10 @@
   <div class="seg" data-range="0-0">Title</div>
   <div class="seg" data-range="1-4">Intro</div>
   <div class="seg" data-range="5-5">Concept</div>
-  <div class="seg" data-range="6-11" id="seg-skills">Skills</div>
-  <div class="seg" data-range="12-13">Integration</div>
-  <div class="seg" data-range="14-15">Philosophy</div>
-  <div class="seg" data-range="16-18">Action</div>
+  <div class="seg" data-range="6-12" id="seg-skills">Skills</div>
+  <div class="seg" data-range="13-14">Integration</div>
+  <div class="seg" data-range="15-16">Philosophy</div>
+  <div class="seg" data-range="17-19">Action</div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.min.js"></script>
@@ -668,7 +676,7 @@
     });
   });
 
-  var skillNames = {6:'Skills — Overview', 7:'Skills — 상품', 8:'Skills — 콘텐츠', 9:'Skills — 일정·소통', 10:'Skills — 이미지·분석·시스템', 11:'Skills — Workflow'};
+  var skillNames = {6:'Skills — Overview', 7:'Skills — 상품', 8:'Skills — 콘텐츠', 9:'Skills — 일정·소통', 10:'Skills — 이미지·분석·시스템', 11:'Skills — 에이전트', 12:'Skills — Workflow'};
 
   function updateProgress() {
     var idx = Reveal.getIndices().h;
@@ -685,7 +693,7 @@
       }
     });
     var skillSeg = document.getElementById('seg-skills');
-    if (idx >= 6 && idx <= 11) {
+    if (idx >= 6 && idx <= 12) {
       skillSeg.textContent = skillNames[idx];
     } else {
       skillSeg.textContent = 'Skills';
