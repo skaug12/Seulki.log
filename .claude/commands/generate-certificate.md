@@ -82,7 +82,7 @@ from google.oauth2.service_account import Credentials
 
 scopes = ['https://www.googleapis.com/auth/spreadsheets']
 creds = Credentials.from_service_account_file(
-    '/Users/sklee/google_sheet_search/credentials.json', scopes=scopes
+    '$HOME/google_sheet_search/credentials.json', scopes=scopes
 )
 gc = gspread.authorize(creds)
 
@@ -129,7 +129,7 @@ curl -L "https://docs.google.com/spreadsheets/d/1i2OHkPy3G1UR3GO-mANSjQ2EKtJ1eeZ
 
 - **스프레드시트 ID**: `1i2OHkPy3G1UR3GO-mANSjQ2EKtJ1eeZPkjvVQXVIB4c`
 - **시트 GID**: `648764598`
-- **서비스 계정 키**: `/Users/sklee/google_sheet_search/credentials.json`
+- **서비스 계정 키**: `$HOME/google_sheet_search/credentials.json`
 - **기관명**: HFK (고정)
 - **공급자**: 위어드벤처 (WeAdventure) (고정)
 

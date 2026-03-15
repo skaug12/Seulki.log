@@ -27,8 +27,9 @@ ENV/
 *.xlsx
 !requirements.txt
 
-# Claude Code 로컬 설정
-.claude/
+# Claude Code 로컬 설정 (commands만 추적)
+.claude/*
+!.claude/commands/
 
 # Obsidian 설정
 .obsidian/

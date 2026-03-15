@@ -72,7 +72,7 @@ scopes = [
     'https://www.googleapis.com/auth/drive'
 ]
 creds = Credentials.from_service_account_file(
-    '/Users/sklee/google_sheet_search/credentials.json', scopes=scopes
+    '$HOME/google_sheet_search/credentials.json', scopes=scopes
 )
 gc = gspread.authorize(creds)
 sh = gc.open_by_key('1Lqem8RwJmoXQp1xXbblAmJoRA_BWN56asR823g3CJyM')
