@@ -17,36 +17,42 @@
 
 $ARGUMENTS를 파싱하여 세션 핸드아웃을 생성합니다.
 
-### 1단계: 세션 일정 조회 (Slack)
+### 1단계: 세션 일정 조회 (Product 노트)
 
-`slack_sdk`의 `conversations.history`로 해당 날짜에 진행되는 팀 세션을 검색합니다.
+`$HFK_VAULT/product/` 폴더의 팀 노트(MD 파일)에서 해당 날짜에 진행되는 팀 세션을 검색합니다.
 
-- Bot Token: `$HFK_VAULT/.env`의 `SLACK_BOT_TOKEN` (`xoxb-...`)
-- 팀 채널(`1--팀명`) 목록을 `conversations.list`로 조회
-- 각 채널의 최근 메시지에서 해당 날짜 세션 공지를 탐색
-- 추출 정보: **시즌**, **팀 이름**, **회차**, **주제(세부 주제)**, **다음 회차 일정**, **장소**, **시간**
-
-**참고**: `search.messages` API는 Bot Token에서 사용 불가 (`not_allowed_token_type`). 반드시 `conversations.history`를 사용합니다.
+- 대상 폴더: `$HFK_VAULT/product/26봄주중/`, `$HFK_VAULT/product/26봄주말/` (현재 시즌에 맞게 변경)
+- 각 `.md` 파일의 `## 3개월 세션 주제` 섹션에서 회차별 날짜/주제/설명을 파싱
+- 파싱 패턴: `### N회차` → `- **날짜**: M월 D일 (요일)` → `- **주제**: ...` → `- **설명**: ...`
+- 추출 정보: **팀 이름** (파일명), **회차**, **날짜**, **주제**, **설명**, **다음 회차 일정**
+- 시즌: frontmatter의 `category` 값 (예: `26봄주중` → `2026 봄시즌`)
+- 장소/시간: frontmatter의 `schedule` 값 (예: `금요일 19:30-22:00 (3개월)`)
 
 해당 날짜에 여러 팀이 세션을 진행할 수 있으므로, 모든 팀을 수집합니다.
 
 ```python
-# Python venv 경로: $HOME/hfk-slack-venv/
-# Bot Token은 $HFK_VAULT/.env 파일에서 로드
-from slack_sdk import WebClient
-import os
-# .env 로드 후
-client = WebClient(token=os.environ['SLACK_BOT_TOKEN'])
+import os, re, glob
 
-# 채널 목록 조회
-channels = client.conversations_list(types="public_channel", limit=1000)
-team_channels = [ch for ch in channels['channels'] if ch['name'].startswith('1--')]
+vault = "$HFK_VAULT"
+categories = ["26봄주중", "26봄주말"]  # 현재 시즌에 맞게 변경
+target_date = "3월 18일"  # 입력 날짜를 "M월 D일" 형식으로 변환
 
-# 각 채널 히스토리 검색
-for ch in team_channels:
-    history = client.conversations_history(channel=ch['id'], limit=20)
-    # 메시지에서 날짜 매칭
+found = []
+for cat in categories:
+    for f in glob.glob(os.path.join(vault, "product", cat, "*.md")):
+        team = os.path.basename(f).replace(".md", "")
+        with open(f) as fh:
+            content = fh.read()
+        sessions = re.findall(
+            r'###\s*(\d+)회차\s*\n-\s*\*\*날짜\*\*:\s*(.+?)\n-\s*\*\*주제\*\*:\s*(.+?)(?:\n|$)',
+            content
+        )
+        for num, date_str, topic in sessions:
+            if target_date in date_str:
+                found.append({"team": team, "session": int(num), "topic": topic.strip(), "category": cat})
 ```
+
+**다음 회차 정보**: 같은 팀의 현재 회차 +1 회차의 날짜를 찾아서 `nextSession` 문자열을 생성합니다.
 
 ### 2단계: 파트너 & 멤버 리스트 조회 (Google Sheets)
 
@@ -264,7 +270,7 @@ bash scripts/deploy-web.sh
 
 | 정보 | 소스 | 방법 |
 |------|------|------|
-| 팀/세션/주제/회차 | Slack 팀 채널 공지 | `slack_sdk` → `conversations.history` (Bot Token) |
+| 팀/세션/주제/회차 | Product 노트 (Obsidian) | `$HFK_VAULT/product/26봄주중/*.md`, `26봄주말/*.md` 파싱 |
 | 파트너/멤버 | HFK사람들 구글시트 | `gspread` + Service Account |
 | 주요 공지 | 사용자 입력 | — |
 | 타임테이블 | 기본값 + 사용자 수정 | — |
@@ -278,7 +284,8 @@ bash scripts/deploy-web.sh
 | Python venv | `$HOME/hfk-slack-venv/` |
 | Google 인증 | `$HOME/google_sheet_search/credentials.json` |
 | 캘린더 스크립트 | `$HFK_VAULT/scripts/fetch_calendar.py` |
-| 캘린더 .env | `$HFK_VAULT/.env` (API_KEY, CALENDAR_ID) |
+| 캘린더 .env | `$HOME/Seulki.log/.env` (GOOGLE_API_KEY, HFK_CALENDAR_ID, SLACK_BOT_TOKEN) |
+| Product 노트 | `$HFK_VAULT/product/26봄주중/*.md`, `$HFK_VAULT/product/26봄주말/*.md` |
 | 소스 프로젝트 | `$HOME/Projects/session-guide/` |
 | 컴포넌트 | `src/app/components/A4Guide.tsx` |
 | PDF 빌드 출력 | `dist/index.html` |
@@ -295,7 +302,7 @@ bash scripts/deploy-web.sh
 - 빌드 후 원본 데이터로 복원하지 않음 (마지막 팀 데이터가 남음)
 - **JSON 데이터 저장은 PDF 생성 전에 수행** (7단계 → 8단계 순서)
 - **웹 배포는 모든 PDF 생성 후 1회만 수행** (9단계)
-- Slack `search.messages`는 Bot Token 불가 → `conversations.history` 사용
+- 세션 일정은 Product 노트에서 파싱 (Slack 검색 불필요)
 - Playwright 미설치 시: `pip install playwright && playwright install chromium`
 
 $ARGUMENTS

@@ -5,7 +5,7 @@
 ## 사용법
 
 ```
-/run-daily
+/run-daily-note
 ```
 
 ## 실행 워크플로우
@@ -30,3 +30,17 @@
 - 기록된 작업 수
 - 현재 미리알림 현황 (완료/미완료)
 - 새로 추가된 To-Do 수
+
+### Step 4: git push
+
+1. `$HOME/Seulki.log/` 디렉토리에서 변경사항을 커밋하고 푸시합니다
+2. daily 파일 및 기타 변경 파일을 staging합니다
+3. 커밋 메시지: `daily: YYYY-MM-DD`
+4. `git push origin main`
+
+```bash
+cd $HOME/Seulki.log
+git add daily/
+git commit -m "daily: $(date +%Y-%m-%d)"
+git push origin main
+```
