@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 활용 가이드 — AI부사수 세션 1회차</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/white.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root {
+    --bg: #F8F7F4;
+    --text: #2C2C2C;
+    --text-sub: #6B6B6B;
+    --text-dim: #9A9A9A;
+    --accent: #8B5E3C;
+    --accent2: #3D5A80;
+    --accent3: #5B7B5E;
+    --accent4: #7B6B8A;
+    --accent5: #8A5E5E;
+    --accent6: #5A7B7B;
+    --card-bg: #F1EFEA;
+    --r-background-color: var(--bg);
+    --r-main-font: 'Pretendard', -apple-system, sans-serif;
+    --r-heading-font: 'Pretendard', -apple-system, sans-serif;
+    --r-main-color: var(--text);
+    --r-heading-color: var(--text);
+    --r-main-font-size: 30px;
+  }
+  .reveal { font-weight: 400; }
+  .reveal h1 { font-size: 2.4em; font-weight: 700; letter-spacing: -0.03em; line-height: 1.2; }
+  .reveal h2 { font-size: 1.3em; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 0.5em; }
+  .reveal h3 { font-size: 0.7em; font-weight: 600; letter-spacing: -0.01em; margin: 0 0 6px; word-break: keep-all; overflow-wrap: break-word; }
+  .reveal p { font-size: 0.6em; line-height: 1.6; color: var(--text-sub); }
+  .reveal li { font-size: 0.6em; line-height: 1.6; color: var(--text-sub); }
+  .reveal ul { list-style: none; padding-left: 0; margin: 0; }
+  .reveal ul li { padding-left: 14px; position: relative; }
+  .reveal ul li::before { content: ""; position: absolute; left: 0; top: 11px; width: 4px; height: 4px; border-radius: 50%; background: var(--text-dim); }
+  .reveal ol { padding-left: 18px; }
+  .reveal ol li { padding-left: 4px; }
+  .reveal ol li::before { display: none; }
+  .reveal section { text-align: left; padding: 36px 60px 56px !important; box-sizing: border-box; overflow: hidden; }
+  .reveal .slides section:not(.present) { opacity: 0 !important; visibility: hidden !important; }
+  .reveal code { font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace; font-size: 0.88em; }
+  .reveal .slides { text-align: left; }
+  .reveal .slide-number { font-family: 'Pretendard'; font-size: 11px; color: var(--text-dim); }
+  .reveal .controls { color: var(--accent); }
+  .reveal .progress { display: none; }
+
+  .sub { color: var(--text-sub); }
+  .dim { color: var(--text-dim); }
+  .accent { color: var(--accent); }
+  .accent2 { color: var(--accent2); }
+  .accent3 { color: var(--accent3); }
+  .accent4 { color: var(--accent4); }
+  .accent5 { color: var(--accent5); }
+  .accent6 { color: var(--accent6); }
+  .bold { font-weight: 600; }
+  .small { font-size: 0.6em !important; }
+  .tiny { font-size: 0.6em !important; }
+  .tiny li, .tiny p, .small li, .small p { font-size: 1em !important; }
+
+  .label { font-size: 0.42em; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 10px; }
+
+  .grid { display: grid; gap: 24px; }
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+  .grid-3 { grid-template-columns: 1fr 1fr 1fr; }
+  .grid-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  .grid-5 { grid-template-columns: 1fr 1fr 1fr 1fr 1fr; }
+
+  .card { background: var(--card-bg); border-radius: 8px; padding: 22px 24px; overflow: hidden; }
+  .card h3 { margin: 0; }
+  .card p { margin: 0; }
+  .card ul, .card ol { margin: 0; }
+  .card .skill-tag { margin-bottom: 0; }
+  .card .category-tag { margin-bottom: 0; }
+  .card > * + * { margin-top: 14px !important; }
+  .card .skill-tag + h3 { margin-top: 10px !important; }
+  .card .category-tag + p, .card .category-tag + code, .card .category-tag + h3 { margin-top: 10px !important; }
+  .card div > .skill-tag + h3 { margin-top: 10px !important; }
+  .card div > .skill-tag { display: block; }
+  .card li + li { margin-top: 4px; }
+
+  .code-block { background: #2C2C2C; border-radius: 8px; padding: 18px 22px; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.52em; line-height: 1.85; color: #D4D0C8; text-align: left; }
+  .code-block .prompt { color: var(--accent3); }
+  .code-block .cmd { color: #D4A574; }
+  .code-block .comment { color: #6B6B6B; }
+
+  .skill-tag { display: inline-block; font-family: 'SF Mono', 'Fira Code', monospace; font-size: 0.5em; font-weight: 500; padding: 3px 10px; border-radius: 4px; background: rgba(139,94,60,0.08); color: var(--accent); margin-bottom: 8px; }
+
+  .flow-item { text-align: center; padding: 12px 10px; background: var(--card-bg); border-radius: 8px; }
+  .flow-arrow { display: flex; align-items: center; justify-content: center; color: var(--text-dim); font-size: 1em; padding: 0 6px; }
+
+  .category-tag { display: inline-block; font-size: 0.46em; font-weight: 500; padding: 3px 12px; border-radius: 4px; margin-bottom: 8px; }
+  .cat-brown { background: rgba(139,94,60,0.1); color: var(--accent); }
+  .cat-blue { background: rgba(61,90,128,0.1); color: var(--accent2); }
+  .cat-green { background: rgba(91,123,94,0.1); color: var(--accent3); }
+  .cat-purple { background: rgba(123,107,138,0.1); color: var(--accent4); }
+  .cat-red { background: rgba(138,94,94,0.1); color: var(--accent5); }
+  .cat-teal { background: rgba(90,123,123,0.1); color: var(--accent6); }
+
+  .highlight-box { border-radius: 8px; padding: 16px 22px; text-align: center; }
+
+  /* Custom progress bar */
+  #custom-progress { position: fixed; bottom: 0; left: 0; right: 0; height: 28px; background: #ECEAE5; display: flex; z-index: 100; font-family: 'Pretendard', sans-serif; }
+  #custom-progress .seg { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 500; color: var(--text-dim); letter-spacing: 0.02em; position: relative; transition: background 0.3s, color 0.3s; cursor: pointer; }
+  #custom-progress .seg.active { background: var(--accent); color: #F8F7F4; }
+  #custom-progress .seg.done { background: rgba(139,94,60,0.2); color: var(--accent); }
+  #custom-progress .seg + .seg { border-left: 1px solid rgba(0,0,0,0.06); }
+  .highlight-before { background: rgba(138,94,94,0.06); }
+  .highlight-after { background: rgba(91,123,94,0.06); }
+
+  .summary-card { background: var(--card-bg); border-radius: 8px; padding: 16px 24px; text-align: center; }
+</style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ===== 1: TITLE ===== -->
+<section>
+  <div style="display:flex; flex-direction:column; justify-content:center; height:100%; text-align:center;">
+    <h1>Claude Code<br>활용 가이드</h1>
+    <p style="font-size:0.78em; color:var(--accent); font-weight:400; margin-top:16px;">커스텀 스킬로 만드는 나만의 AI 업무 자동화</p>
+    <p class="dim" style="font-size:0.56em; margin-top:12px;">실제 운영 사례와 함께 보는 32개 스킬 이야기</p>
+    <p class="dim" style="font-size:0.46em; margin-top:40px;">AI부사수 세션 1회차 · Seulki.log</p>
+  </div>
+</section>
+
+<!-- ===== 2: AI JOURNEY ===== -->
+<section>
+  <div class="label">Background</div>
+  <h2>AI, 함께 배우고 만들어 온 이야기</h2>
+  <div class="grid grid-4" style="margin-bottom:18px;">
+    <div class="card">
+      <p class="accent bold">2023</p>
+      <h3>AI 스터디 기획</h3>
+      <p class="dim">ChatGPT 등장 이후 AI를 실무에 어떻게 적용할지 함께 탐색</p>
+    </div>
+    <div class="card">
+      <p class="accent2 bold">2023~현재</p>
+      <h3>AI부사수 팀 운영</h3>
+      <p class="dim">시즌마다 AI 활용 팀 운영, Work Breakdown으로 실무 적용</p>
+    </div>
+    <div class="card">
+      <p class="accent3 bold">2025</p>
+      <h3>AI 컨퍼런스 개최</h3>
+      <p class="dim">&lt;AI에 대체되지 않는 사람들&gt; 비개발자 연사 3명의 실전</p>
+    </div>
+    <div class="card">
+      <p class="accent4 bold">2025~</p>
+      <h3>Claude Code 도입</h3>
+      <p class="dim">커뮤니티 운영 업무를 32개 커스텀 스킬로 자동화</p>
+    </div>
+  </div>
+  <div class="summary-card">
+    <p style="font-size:0.58em; color:var(--text); margin:0;">
+      <span class="accent bold">컨퍼런스 핵심 메시지</span> &mdash;
+      <span class="sub">"AI를 과소평가하지도, 과대평가하지도 말 것. 자신만의 베이스캠프를 정해 꾸준히 활용하는 것이 핵심이다."</span>
+    </p>
+  </div>
+</section>
+
+<!-- ===== 3: WHAT IS CLAUDE CODE ===== -->
+<section>
+  <div class="label">Introduction</div>
+  <h2>Claude Code란?</h2>
+  <div class="grid grid-2" style="gap:28px;">
+    <div>
+      <p style="font-size:0.68em; color:var(--text); font-weight:500;">기획자인 나에게 생긴 "개발자 동료"</p>
+      <p style="margin-top:12px;">한국어로 "이거 해줘"라고 말하면, Claude가 내 컴퓨터에서 직접 파일을 읽고, 코드를 짜고, 결과물을 만들어줍니다.</p>
+      <p class="accent bold" style="font-size:0.58em; margin-top:20px; margin-bottom:8px;">쉽게 이해하기</p>
+      <ul>
+        <li><span class="bold">스킬</span> = 레시피 (절차를 적어두면 매번 같은 결과)</li>
+        <li><span class="bold">에이전트</span> = 셰프 (레시피대로 요리하며 중간중간 확인)</li>
+        <li><span class="bold">MCP</span> = 배달 서비스 (Slack, 캘린더 등 외부 연결)</li>
+      </ul>
+    </div>
+    <div class="code-block">
+      <span class="comment"># 예: 슬랙에 공지 보내기</span><br><br>
+      <span style="color:#F1EFEA;">&gt; 이번 주 금요일 세션 공지를</span><br>
+      <span style="color:#F1EFEA;">&nbsp; 팀 채널에 예약 발송해줘</span><br><br>
+      <span class="comment">&nbsp; Claude가 캘린더에서 일정을 찾고,</span><br>
+      <span class="comment">&nbsp; 공지 메시지를 만들고,</span><br>
+      <span class="comment">&nbsp; Slack에 예약 발송합니다.</span><br><br>
+      <span class="comment"># 코딩 지식이 전혀 필요 없습니다.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 4: CLAUDE CODE vs CHATGPT ===== -->
+<section>
+  <div class="label">Why Claude Code</div>
+  <h2>ChatGPT와 뭐가 다른가요?</h2>
+  <p style="margin-bottom:16px;">같은 "200개 상품 데이터 분석해줘"를 요청했을 때의 차이입니다.</p>
+  <div class="grid grid-2" style="gap:20px; margin-bottom:16px;">
+    <div class="card">
+      <p class="accent2 bold">ChatGPT &mdash; "알려주는" AI</p>
+      <ul>
+        <li>파일 올리면 요약해서 텍스트로 알려줌</li>
+        <li>데이터가 많으면 일부만 보고 "대략" 분석</li>
+        <li>결과를 복사해서 엑셀에 다시 붙여넣어야 함</li>
+        <li>"답변"을 주지만 실행까지는 해주지 않음</li>
+      </ul>
+    </div>
+    <div class="card">
+      <p class="accent bold">Claude Code &mdash; "실행하는" AI</p>
+      <ul>
+        <li>내 컴퓨터의 파일을 직접 열어서 분석</li>
+        <li>200개 전부 빠짐없이 처리</li>
+        <li>분석 결과를 쇼핑몰에 바로 반영까지 완료</li>
+        <li>"답변" 대신 "결과물"을 만들어 줌</li>
+      </ul>
+    </div>
+  </div>
+  <div class="summary-card">
+    <p style="font-size:0.56em; color:var(--text); margin:0;">
+      <span class="accent bold">이슬기 실전</span> &mdash;
+      <span class="sub">200개 상품 정보를 분석하고, 쇼핑몰용 HTML을 만들고, 아임웹 API로 업로드까지 &mdash; 한 번의 명령으로 끝</span>
+    </p>
+  </div>
+</section>
+
+<!-- ===== 5: PLANNER AS DEVELOPER ===== -->
+<section>
+  <div class="label">Perspective</div>
+  <h2>"이런 것까지 되나요?"</h2>
+  <p style="margin-bottom:16px;">여러분의 직군에서 Claude Code로 할 수 있는 것들입니다.</p>
+  <div class="grid grid-3" style="gap:20px; margin-bottom:16px;">
+    <div class="card">
+      <h3 class="accent2">마케팅 · 브랜드</h3>
+      <ul>
+        <li>캠페인 데이터 엑셀 &rarr; 자동 리포트 생성</li>
+        <li>SNS 콘텐츠 채널별 맞춤 초안 작성</li>
+        <li>경쟁사 가격/프로모션 비교표 자동 제작</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="accent">운영 · 기획</h3>
+      <ul>
+        <li>반복 서류 양식 자동 생성 (수강확인증 등)</li>
+        <li>Slack 채널 20개 한 번에 만들기</li>
+        <li>일정표 보고 해야 할 일 미리알림 등록</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 class="accent3">재무 · 분석</h3>
+      <ul>
+        <li>월별 매출 데이터 &rarr; 트렌드 분석</li>
+        <li>GA 방문자 데이터 &rarr; 월간 리포트</li>
+        <li>여러 시트의 데이터를 하나로 통합</li>
+      </ul>
+    </div>
+  </div>
+  <div class="summary-card">
+    <p style="font-size:0.56em; color:var(--text); margin:0;">
+      <span class="accent4 bold">핵심</span> &mdash;
+      <span class="sub">코딩을 배우는 게 아닙니다. "이렇게 해줘"라고 말하면 Claude가 코딩하고 실행까지 해줍니다.</span>
+    </p>
+  </div>
+</section>
+
+<!-- ===== 6: CUSTOM SKILLS ===== -->
+<section>
+  <div class="label">Core Concept</div>
+  <h2>커스텀 스킬 = 나만의 레시피</h2>
+  <p style="margin-bottom:18px;">업무 절차를 한국어로 적어두면, Claude가 매번 그대로 실행합니다. 요리 레시피처럼요.</p>
+  <div class="grid grid-2" style="gap:24px;">
+    <div class="card">
+      <h3 class="accent2">레시피 만드는 법</h3>
+      <ol style="color:var(--text-sub);">
+        <li>업무를 할 때 내가 하는 순서를 적음</li>
+        <li>그 순서를 텍스트 파일(.md)에 저장</li>
+        <li><code style="color:var(--accent);">/파일명</code> 으로 실행하면 끝</li>
+      </ol>
+      <p class="dim" style="margin-top:14px;">예: <code style="color:var(--accent);">/schedule-notices</code> &rarr; 세션 공지 자동 발송</p>
+    </div>
+    <div class="card">
+      <h3 class="accent3">이슬기의 레시피 예시</h3>
+      <ul>
+        <li><code>/sync-products</code> 상품 정보 &rarr; 쇼핑몰 반영</li>
+        <li><code>/generate-letter</code> 시즌 안내 레터 자동 생성</li>
+        <li><code>/manage-attendance</code> 출석 체크 자동 기록</li>
+        <li><code>/daily</code> 오늘 한 일 정리 + 미리알림</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 7: PROJECT OVERVIEW ===== -->
+<section>
+  <div class="label">Case Study</div>
+  <h2>HFK 커뮤니티 운영 자동화</h2>
+  <p style="margin-bottom:16px;">오프라인 학습 커뮤니티의 운영 업무를 32개 스킬로 자동화한 사례입니다.</p>
+  <div class="grid" style="grid-template-columns:1fr auto 1fr auto 1fr auto 1fr; gap:0; align-items:center; margin-bottom:18px;">
+    <div class="flow-item"><p class="accent2 bold" style="font-size:0.58em;">Obsidian</p><p class="dim">콘텐츠 관리</p></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-item" style="background:rgba(139,94,60,0.08);"><p class="accent bold" style="font-size:0.58em;">Claude Code</p><p class="dim">32개 스킬</p></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-item"><p class="accent3 bold" style="font-size:0.58em;">아임웹</p><p class="dim">쇼핑몰</p></div>
+    <div class="flow-arrow">&rarr;</div>
+    <div class="flow-item"><p class="accent4 bold" style="font-size:0.58em;">Slack / Calendar</p><p class="dim">소통 · 일정</p></div>
+  </div>
+  <div class="grid grid-3" style="gap:18px;">
+    <div class="card"><span class="category-tag cat-blue">상품 관리 5</span><p class="dim">sync, backup, evaluate, expand, convert</p></div>
+    <div class="card"><span class="category-tag cat-brown">콘텐츠 생성 7</span><p class="dim">letter, event-review, team-review, certificate, handout, draft, convert-html</p></div>
+    <div class="card"><span class="category-tag cat-green">일정 · 소통 5</span><p class="dim">schedule, notices, daily, reminder, slack</p></div>
+    <div class="card"><span class="category-tag cat-purple">이미지 관리 2</span><p class="dim">categorize (hfk, imweb)</p></div>
+    <div class="card"><span class="category-tag cat-red">운영 에이전트 5</span><p class="dim">season, product, content, daily, image</p></div>
+    <div class="card"><span class="category-tag cat-teal">분석 · 시스템 8</span><p class="dim">analyze-slack, attendance, backup-notes, ga-report, color-guide, save, skill-guide</p></div>
+  </div>
+</section>
+
+<!-- ===== 8: PRODUCT SKILLS ===== -->
+<section>
+  <div class="label">Skills &mdash; 상품 관리</div>
+  <h2>상품 관리 스킬</h2>
+  <div class="grid grid-2" style="gap:20px;">
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(61,90,128,0.08); color:var(--accent2);">/sync-products</span>
+      <h3>Obsidian 노트 &rarr; 아임웹 동기화</h3>
+      <ul><li>Markdown 파싱 &rarr; HTML 생성 &rarr; API로 상품 업데이트</li><li>status: draft &rarr; synced 자동 전환</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(91,123,94,0.08); color:var(--accent3);">/backup-products</span>
+      <h3>아임웹 &rarr; Obsidian 백업</h3>
+      <ul><li>아임웹 상품 정보를 Markdown 노트로 역변환</li><li>시즌별 카테고리 선택 가능</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag">/evaluate-notes</span>
+      <h3>상품 노트 완성도 평가</h3>
+      <ul><li>가이드라인 기준 100점 만점 자동 채점</li><li>긴급 이슈는 Apple 미리알림에 자동 추가</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(123,107,138,0.08); color:var(--accent4);">/expand-idea</span>
+      <h3>아이디어 &rarr; 상품 초안</h3>
+      <ul><li>간단한 메모에서 톤앤매너에 맞는 초안 자동 작성</li><li>헤드라인, 소개, 세션 구성까지 생성</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 9: CONTENT SKILLS ===== -->
+<section>
+  <div class="label">Skills &mdash; 콘텐츠 생성</div>
+  <h2>콘텐츠 생성 스킬</h2>
+  <div class="grid grid-2" style="gap:20px;">
+    <div class="card">
+      <span class="skill-tag">/generate-letter</span>
+      <h3>시즌레터 자동 생성</h3>
+      <p class="dim">Obsidian 템플릿 + Calendar 일정 기반 HTML 생성</p>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(61,90,128,0.08); color:var(--accent2);">/generate-event-review</span>
+      <h3>이벤트 후기 생성</h3>
+      <p class="dim">녹취 텍스트 기반 2,000~3,000자 유형별 후기</p>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(91,123,94,0.08); color:var(--accent3);">/generate-team-review</span>
+      <h3>팀 활동 후기 생성</h3>
+      <p class="dim">녹취 텍스트 기반 팀별 세션 내용·분위기 반영</p>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(123,107,138,0.08); color:var(--accent4);">/generate-certificate</span>
+      <h3>수강확인증 생성</h3>
+      <p class="dim">아임웹 파싱 &rarr; Google Sheets &rarr; PDF 다운로드</p>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(138,94,94,0.08); color:var(--accent5);">/generate-handout</span>
+      <h3>세션 핸드아웃 생성</h3>
+      <p class="dim">날짜 입력 시 팀별 세션 A4 핸드아웃 PDF 생성</p>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(90,123,123,0.08); color:var(--accent6);">/draft-from-recording</span>
+      <h3>녹음 &rarr; 콘텐츠 초안</h3>
+      <p class="dim">클로버노트 녹취 &rarr; 구조화된 콘텐츠로 변환</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10: SCHEDULE & COMMUNICATION ===== -->
+<section>
+  <div class="label">Skills &mdash; 일정 · 소통</div>
+  <h2>일정 관리 & 소통 스킬</h2>
+  <div class="grid grid-3" style="margin-bottom:16px;">
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(91,123,94,0.08); color:var(--accent3);">/update-schedule</span>
+      <h3>Calendar &rarr; 일정 업데이트</h3>
+      <ul><li>캘린더 이벤트에서 팀명 자동 매칭</li><li>각 회차 날짜를 상품 노트에 반영</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(61,90,128,0.08); color:var(--accent2);">/schedule-notices</span>
+      <h3>Slack 공지 예약 발송</h3>
+      <ul><li>기간 내 세션 팀 자동 검색</li><li>Block Kit 메시지 생성 후 예약 발송</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag">/daily</span>
+      <h3>데일리 작업 일지</h3>
+      <ul><li>날짜별 daily 파일 자동 생성</li><li>작업 기록 후 미리알림 연동</li></ul>
+    </div>
+  </div>
+  <div class="grid grid-2">
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(123,107,138,0.08); color:var(--accent4);">/add-reminder</span>
+      <h3>Apple 미리알림 추가</h3>
+      <p class="sub">Apple Reminders에 To-Do 일괄 추가 · 마감일 자동 설정</p>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(138,94,94,0.08); color:var(--accent5);">/create-slack-channels</span>
+      <h3>Slack 채널 일괄 생성</h3>
+      <p class="sub">CSV 기반 채널 생성 · 이메일로 멤버 자동 초대</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 11: IMAGE · ANALYSIS · SYSTEM ===== -->
+<section>
+  <div class="label">Skills &mdash; 이미지 · 분석 · 시스템</div>
+  <h2>이미지 · 분석 · 시스템 스킬</h2>
+  <div class="grid grid-2" style="gap:20px; margin-bottom:16px;">
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(123,107,138,0.08); color:var(--accent4);">/categorize-images</span>
+      <h3>이미지 자동 분류</h3>
+      <ul><li>Claude Vision으로 이미지 분석 후 팀별 분류</li><li>리사이즈 + EXIF 추출 · 캘린더 기반 분류</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(90,123,123,0.08); color:var(--accent6);">/analyze-slack</span>
+      <h3>Slack 워크스페이스 분석</h3>
+      <ul><li>Slack API로 메시지 수집 후 구조·시계열 분석</li><li>분석 결과를 Obsidian MD 파일로 저장</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(91,123,94,0.08); color:var(--accent3);">/manage-attendance</span>
+      <h3>출석 관리</h3>
+      <ul><li>Google Sheets 출석 스프레드시트 자동 관리</li><li>시즌별 출석 현황 조회 및 업데이트</li></ul>
+    </div>
+    <div class="card">
+      <span class="skill-tag" style="background:rgba(138,94,94,0.08); color:var(--accent5);">/backup-notes</span>
+      <h3>NOTE 백업</h3>
+      <ul><li>thehfk.org NOTE 게시판 글을 Obsidian에 백업</li><li>웹 콘텐츠를 Markdown으로 자동 변환</li></ul>
+    </div>
+  </div>
+
+</section>
+
+<!-- ===== 11b: AGENT SKILLS ===== -->
+<section>
+  <div class="label">Skills &mdash; 운영 에이전트</div>
+  <h2>에이전트 스킬</h2>
+  <p style="margin-bottom:18px;">여러 스킬을 하나의 워크플로우로 연결하여 복합 업무를 자동 실행합니다.</p>
+  <div class="grid grid-3" style="gap:20px;">
+    <div class="card"><p class="accent3 bold">/run-season-ops</p><h3>시즌 운영</h3><p class="dim">일정 &rarr; 동기화 &rarr; 레터 &rarr; Slack</p></div>
+    <div class="card"><p class="accent2 bold">/run-product-ops</p><h3>상품 관리</h3><p class="dim">백업 &rarr; 평가 &rarr; 보완 &rarr; 동기화</p></div>
+    <div class="card"><p class="accent bold">/run-content-ops</p><h3>콘텐츠 제작</h3><p class="dim">후기 생성 &rarr; HTML 변환</p></div>
+    <div class="card"><p class="accent4 bold">/run-daily</p><h3>데일리</h3><p class="dim">기록 &rarr; 미리알림 &rarr; 요약</p></div>
+    <div class="card"><p class="accent5 bold">/run-image-ops</p><h3>이미지</h3><p class="dim">확인 &rarr; 선택 &rarr; 분류</p></div>
+  </div>
+</section>
+
+<!-- ===== 12: WORKFLOW ===== -->
+<section>
+  <div class="label">Workflow</div>
+  <h2>시즌 오픈 자동화</h2>
+  <p style="margin-bottom:16px;"><span class="skill-tag">/run-season-ops</span> &nbsp;하나로 시즌 오픈 전체 프로세스를 자동 실행합니다.</p>
+  <div class="grid grid-4" style="margin-bottom:18px;">
+    <div class="card"><p class="dim">Step 1</p><p class="accent2 bold">일정 업데이트</p><p class="dim">Google Calendar에서 세션 날짜를 가져와 상품 노트에 반영</p></div>
+    <div class="card"><p class="dim">Step 2</p><p class="accent bold">아임웹 동기화</p><p class="dim">변경된 노트를 HTML로 변환하여 쇼핑몰에 업데이트</p></div>
+    <div class="card"><p class="dim">Step 3</p><p class="accent3 bold">시즌레터 생성</p><p class="dim">이번 시즌 안내 레터를 자동 작성 (선택)</p></div>
+    <div class="card"><p class="dim">Step 4</p><p class="accent4 bold">Slack 공지 예약</p><p class="dim">팀별 채널에 세션 공지 예약 발송 (선택)</p></div>
+  </div>
+  <div class="grid grid-2" style="gap:18px;">
+    <div class="highlight-box highlight-before"><p class="accent5 bold">Before &mdash; 수동 작업</p><p class="dim" style="margin:6px 0;">캘린더 확인 &rarr; 엑셀 &rarr; HTML &rarr; 아임웹 &rarr; 레터 &rarr; 슬랙</p><p class="accent5 bold">약 3~4시간</p></div>
+    <div class="highlight-box highlight-after"><p class="accent3 bold">After &mdash; /run-season-ops</p><p class="dim" style="margin:6px 0;">Claude Code에서 스킬 실행 &rarr; 각 단계 확인만</p><p class="accent3 bold">약 10~15분</p></div>
+  </div>
+</section>
+
+<!-- ===== 13: MCP ===== -->
+<section>
+  <div class="label">Integration</div>
+  <h2>MCP 서버 연동</h2>
+  <p style="margin-bottom:16px;">MCP(Model Context Protocol)로 외부 서비스를 연결하면 스킬의 가능성이 확장됩니다.</p>
+  <div class="grid grid-3" style="margin-bottom:16px;">
+    <div class="card"><p class="accent2 bold">아임웹 API</p><p class="dim">상품 CRUD, 카테고리 관리, 쇼핑몰 데이터 직접 제어</p></div>
+    <div class="card"><p class="accent3 bold">Google Calendar</p><p class="dim">일정 조회 · 검색, 세션 날짜 자동 매칭</p></div>
+    <div class="card"><p class="accent4 bold">Slack</p><p class="dim">메시지 발송, 채널 생성, 예약 발송, 멤버 관리</p></div>
+    <div class="card"><p class="accent5 bold">Apple Reminders</p><p class="dim">미리알림 추가 · 조회, To-Do 관리 자동화</p></div>
+    <div class="card"><p class="accent bold">Google Sheets</p><p class="dim">시트 읽기 · 쓰기, 수강확인증 생성</p></div>
+    <div class="card"><p class="accent6 bold">Google Analytics</p><p class="dim">페이지뷰, 방문자 통계, 월별 리포트 생성</p></div>
+  </div>
+  <div class="code-block" style="text-align:center; padding:12px; font-size:0.5em;"><span class="prompt">$</span> claude mcp add <span class="cmd">[서버명]</span> -- <span class="cmd">[실행 명령]</span></div>
+</section>
+
+<!-- ===== 14: SECURITY ===== -->
+<section>
+  <div class="label">Security</div>
+  <h2>AI에게 뭘 말해도 되나요?</h2>
+  <p style="margin-bottom:16px;">AI 활용 시 가장 많이 받는 질문입니다. 이슬기의 실전 기준으로 설명합니다.</p>
+  <div class="grid grid-2" style="gap:18px; margin-bottom:16px;">
+    <div class="card">
+      <p class="accent3 bold">말해도 되는 것</p>
+      <ul><li>"이 엑셀 데이터 분석해줘" (업무 데이터)</li><li>"마케팅 카피 초안 써줘" (콘텐츠)</li><li>"회의 녹취록 정리해줘" (일반 업무)</li><li>"경쟁사 가격 비교표 만들어줘" (공개 정보)</li></ul>
+    </div>
+    <div class="card">
+      <p class="accent5 bold">절대 말하면 안 되는 것</p>
+      <ul><li>회사 사내 시스템 비밀번호</li><li>고객 개인정보 (이름+전화번호+주소)</li><li>미공개 재무제표, 인사 정보</li><li>주민번호, 카드번호, 계좌번호</li></ul>
+    </div>
+  </div>
+  <div class="grid grid-3">
+    <div class="card"><p class="accent2 bold">1. 비밀번호는 따로 보관</p><p class="dim">이슬기 예: Slack 토큰, 아임웹 API 키를 별도 파일(.env)에 저장하고 AI가 직접 볼 수 없게 분리</p></div>
+    <div class="card"><p class="accent bold">2. 대화는 나만 봄</p><p class="dim">Claude와의 대화는 다른 사람이 볼 수 없고, 대화가 끝나면 Claude도 내용을 잊음</p></div>
+    <div class="card"><p class="accent4 bold">3. 내 컴퓨터에서 실행</p><p class="dim">Claude Code는 내 노트북에서 동작. 파일이 인터넷으로 전송되지 않음</p></div>
+  </div>
+</section>
+
+<!-- ===== 15: KEEP IT SIMPLE ===== -->
+<section>
+  <div class="label">Philosophy</div>
+  <h2>심플하게, 이것 하나만 제대로</h2>
+  <div class="grid grid-2" style="gap:24px;">
+    <div>
+      <p style="font-size:0.66em; color:var(--text); font-weight:500; margin-bottom:10px;">AI 서비스가 넘쳐나는 시대</p>
+      <p>ChatGPT, Gemini, Copilot, Claude, Cursor, n8n, Make, Zapier... 매주 새로운 도구가 등장하고, 뭘 써야 할지 오히려 혼란스럽습니다.</p>
+      <p style="margin-top:12px;">n8n, Make 같은 노코드 자동화 도구는 강력하지만, 설정이 복잡하고 유지보수에 시간이 듭니다.</p>
+      <p class="accent bold" style="font-size:0.62em; margin-top:18px;">"하나를 정하고, 제대로 깊이 쓰자."</p>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:16px;">
+        <h3 class="accent2">복잡하게 만들면</h3>
+        <ul><li>여러 도구를 연결하느라 시간 소모</li><li>하나가 바뀌면 전체가 깨짐</li><li>만든 사람만 이해하는 시스템</li></ul>
+      </div>
+      <div class="card">
+        <h3 class="accent3">심플하게 만들면</h3>
+        <ul><li>마크다운 파일 하나로 업무 자동화</li><li>누구나 읽고 수정할 수 있음</li><li>작은 것부터 시작해서 점진적으로 확장</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 16: IDEAS ===== -->
+<section>
+  <div class="label">Inspiration</div>
+  <h2>여러분의 업무에서 만들 수 있는 스킬</h2>
+  <div class="grid grid-3" style="gap:18px;">
+    <div class="card"><span class="category-tag cat-brown">마케팅</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent);">/write-sns-post</code></p><p class="dim">인스타·블로그·뉴스레터 채널별 맞춤 초안</p></div>
+    <div class="card"><span class="category-tag cat-blue">브랜드</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent2);">/generate-proposal</code></p><p class="dim">고객사별 제안서 초안 자동 작성</p></div>
+    <div class="card"><span class="category-tag cat-green">이커머스</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent3);">/price-watch</code></p><p class="dim">경쟁 브랜드 가격·프로모션 비교표</p></div>
+    <div class="card"><span class="category-tag cat-purple">세무·재무</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent4);">/tax-summary</code></p><p class="dim">거래 내역 &rarr; 세무 요약 보고서</p></div>
+    <div class="card"><span class="category-tag cat-red">데이터 분석</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent5);">/weekly-report</code></p><p class="dim">엑셀 데이터 &rarr; 주간 리포트 자동 생성</p></div>
+    <div class="card"><span class="category-tag cat-teal">콘텐츠</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent6);">/draft-content</code></p><p class="dim">카드뉴스, 숏폼 스크립트 초안 생성</p></div>
+    <div class="card"><span class="category-tag cat-brown">운영</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent);">/meeting-minutes</code></p><p class="dim">녹취록 &rarr; 회의록 + 액션 아이템</p></div>
+    <div class="card"><span class="category-tag cat-blue">HR·총무</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent2);">/onboarding</code></p><p class="dim">신규 입사자 온보딩 체크리스트 생성</p></div>
+    <div class="card"><span class="category-tag cat-green">큐레이션</span><p class="bold" style="color:var(--text);"><code style="color:var(--accent3);">/catalog-builder</code></p><p class="dim">전시·컬렉션 카탈로그 초안 제작</p></div>
+  </div>
+</section>
+
+<!-- ===== 17: RECOMMENDED SKILLS ===== -->
+<section>
+  <div class="label">Recommended</div>
+  <h2>오늘 바로 만들어볼 업무 스킬 5가지</h2>
+  <div class="grid grid-5" style="gap:18px; margin-bottom:18px;">
+    <div class="card" style="padding:22px 24px;"><p style="font-size:1.2em; margin:0 0 6px; color:var(--text-dim);">01</p><h3 class="accent">바탕화면 · 메일함 정리</h3><p class="dim">파일을 날짜/유형별 자동 분류, 메일함 요약</p></div>
+    <div class="card" style="padding:22px 24px;"><p style="font-size:1.2em; margin:0 0 6px; color:var(--text-dim);">02</p><h3 class="accent2">할 일 관리</h3><p class="dim">미리알림에 To-Do 일괄 등록, 우선순위 정리</p></div>
+    <div class="card" style="padding:22px 24px;"><p style="font-size:1.2em; margin:0 0 6px; color:var(--text-dim);">03</p><h3 class="accent3">팀 업무 진행도 파악</h3><p class="dim">Slack/노션/시트에서 팀원별 진행 상황 수집</p></div>
+    <div class="card" style="padding:22px 24px;"><p style="font-size:1.2em; margin:0 0 6px; color:var(--text-dim);">04</p><h3 class="accent4">메모 관리</h3><p class="dim">산발적 메모를 주제별 정리, 태그 분류</p></div>
+    <div class="card" style="padding:22px 24px;"><p style="font-size:1.2em; margin:0 0 6px; color:var(--text-dim);">05</p><h3 class="accent5">콘텐츠 아이디어 뽑기</h3><p class="dim">트렌드 분석 후 SNS, 뉴스레터 주제 제안</p></div>
+  </div>
+  <div class="summary-card">
+    <p style="font-size:0.56em; color:var(--text); margin:0;"><span class="accent bold">공통점</span> &mdash; <span class="sub">모두 반복적이고 매번 시간이 드는 업무. 한 번 스킬로 만들면 매일 몇 분이면 끝납니다.</span></p>
+  </div>
+</section>
+
+<!-- ===== 18: WORKSHOP ===== -->
+<section>
+  <div class="label">Workshop</div>
+  <h2>나만의 첫 스킬 만들기</h2>
+  <p style="margin-bottom:16px;">위 5가지 중 하나를 골라 직접 만들어 봅니다.</p>
+  <div class="grid grid-3" style="gap:20px; margin-bottom:16px;">
+    <div class="card">
+      <p class="accent bold">Step 1 &mdash; 업무 선택 (5분)</p>
+      <ul><li>5가지 추천 스킬 중 하나를 선택</li><li>또는 본인만의 반복 업무를 선정</li><li>"이 업무를 매번 어떤 순서로 하는가?"</li></ul>
+    </div>
+    <div class="card">
+      <p class="accent2 bold">Step 2 &mdash; 절차 작성 (10분)</p>
+      <ul><li>선택한 업무의 순서를 자연어로 적기</li><li>.md 파일에 단계별로 정리</li><li>입력/출력이 무엇인지 명시</li></ul>
+    </div>
+    <div class="card">
+      <p class="accent3 bold">Step 3 &mdash; 실행 & 개선 (15분)</p>
+      <ul><li>Claude Code에서 /스킬명 으로 실행</li><li>결과 확인 후 절차 수정</li><li>2~3번 반복하면 완성도 급상승</li></ul>
+    </div>
+  </div>
+  <div class="grid grid-2" style="gap:20px;">
+    <div class="code-block" style="font-size:0.5em; line-height:1.8;">
+      <span class="comment"># 예시: 바탕화면 정리 스킬</span><br><br>
+      <span style="color:#F1EFEA;">## 실행</span><br>
+      <span class="comment">1. ~/Desktop 폴더의 파일 목록을 확인</span><br>
+      <span class="comment">2. 확장자별로 폴더 분류 (이미지/문서/기타)</span><br>
+      <span class="comment">3. 7일 이상 된 파일은 archive/ 로 이동</span><br>
+      <span class="comment">4. 정리 결과를 요약하여 보여줌</span>
+    </div>
+    <div class="card" style="display:flex; flex-direction:column; justify-content:center;">
+      <p class="accent4 bold" style="margin-bottom:10px;">워크숍이 끝나면</p>
+      <ul><li>나만의 첫 번째 Claude Code 스킬 완성</li><li>이 스킬을 기반으로 다른 업무도 확장 가능</li><li>GitHub에 올려 팀과 공유하는 것도 추천</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 19: GET STARTED ===== -->
+<section>
+  <div class="label">Get Started</div>
+  <h2>지금 시작하기</h2>
+  <div class="grid grid-4" style="margin-bottom:20px;">
+    <div class="card">
+      <p class="accent2 bold">01</p>
+      <h3>Claude Code 설치</h3>
+      <div class="code-block" style="margin-top:10px; padding:10px 14px; font-size:0.48em; line-height:1.7;">npm install -g<br>@anthropic-ai/claude-code</div>
+    </div>
+    <div class="card">
+      <p class="accent bold">02</p>
+      <h3>첫 스킬 만들기</h3>
+      <div class="code-block" style="margin-top:10px; padding:10px 14px; font-size:0.48em; line-height:1.7;">mkdir -p<br>.claude/commands<br><span class="comment"># .md 파일로 절차 작성</span></div>
+    </div>
+    <div class="card">
+      <p class="accent3 bold">03</p>
+      <h3>MCP 서버 연결</h3>
+      <div class="code-block" style="margin-top:10px; padding:10px 14px; font-size:0.48em; line-height:1.7;">claude mcp add<br><span class="cmd">[서버명]</span><br>-- <span class="cmd">[실행 명령]</span></div>
+    </div>
+    <div class="card">
+      <p class="accent4 bold">04</p>
+      <h3>스킬 조합하기</h3>
+      <div class="code-block" style="margin-top:10px; padding:10px 14px; font-size:0.48em; line-height:1.7;"><span class="comment"># 에이전트 스킬로</span><br><span class="comment"># 여러 스킬을 연결</span><br><span class="cmd">/run-season-ops</span></div>
+    </div>
+  </div>
+  <div class="summary-card" style="padding:22px 30px;">
+    <p class="bold" style="font-size:0.78em; color:var(--text); margin-bottom:8px;">코딩을 몰라도 됩니다.</p>
+    <p style="font-size:0.58em;">업무 절차를 자연어로 적으면 Claude가 이해합니다. 반복되는 업무가 있다면, 그것이 바로 스킬로 만들 첫 번째 후보입니다.</p>
+  </div>
+</section>
+
+</div>
+</div>
+
+<div id="custom-progress">
+  <div class="seg" data-range="0-0">Title</div>
+  <div class="seg" data-range="1-4">Intro</div>
+  <div class="seg" data-range="5-5">Concept</div>
+  <div class="seg" data-range="6-12" id="seg-skills">Skills</div>
+  <div class="seg" data-range="13-14">Integration</div>
+  <div class="seg" data-range="15-16">Philosophy</div>
+  <div class="seg" data-range="17-19">Action</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    transition: 'fade',
+    transitionSpeed: 'fast',
+    backgroundTransition: 'fade',
+    center: true,
+    controls: true,
+    controlsLayout: 'edges',
+    progress: false,
+    slideNumber: 'c/t',
+  });
+
+  Reveal.on('slidechanged', updateProgress);
+  Reveal.on('ready', updateProgress);
+
+  document.querySelectorAll('#custom-progress .seg').forEach(function(seg) {
+    seg.addEventListener('click', function() {
+      var start = parseInt(seg.dataset.range.split('-')[0]);
+      Reveal.slide(start);
+    });
+  });
+
+  var skillNames = {6:'Skills — Overview', 7:'Skills — 상품', 8:'Skills — 콘텐츠', 9:'Skills — 일정·소통', 10:'Skills — 이미지·분석·시스템', 11:'Skills — 에이전트', 12:'Skills — Workflow'};
+
+  function updateProgress() {
+    var idx = Reveal.getIndices().h;
+    var segs = document.querySelectorAll('#custom-progress .seg');
+    segs.forEach(function(seg) {
+      var range = seg.dataset.range.split('-');
+      var start = parseInt(range[0]);
+      var end = parseInt(range[1]);
+      seg.classList.remove('active', 'done');
+      if (idx >= start && idx <= end) {
+        seg.classList.add('active');
+      } else if (idx > end) {
+        seg.classList.add('done');
+      }
+    });
+    var skillSeg = document.getElementById('seg-skills');
+    if (idx >= 6 && idx <= 12) {
+      skillSeg.textContent = skillNames[idx];
+    } else {
+      skillSeg.textContent = 'Skills';
+    }
+  }
+</script>
+</body>
+</html>
