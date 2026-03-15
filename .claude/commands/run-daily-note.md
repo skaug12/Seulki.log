@@ -7,24 +7,50 @@
 ### Step 1: 작업 내역 자동 수집
 
 1. `$HOME/Seulki.log/daily/YYYY-MM-DD.md` 확인 (없으면 생성, 있으면 읽기)
-2. 아래 소스에서 오늘 작업 내역을 자동 수집:
+2. 아래 3가지 소스에서 오늘 작업 내역을 **모두** 자동 수집:
 
    **a) Git 커밋 이력**
    ```bash
    cd $HOME/Seulki.log
-   git log --since="$(date +%Y-%m-%d)T00:00" --until="$(date +%Y-%m-%d)T23:59" --oneline --all
+   git log --since="$(date +%Y-%m-%d)T00:00" --until="$(date +%Y-%m-%d)T23:59" --oneline --all --name-only
    ```
-   - 커밋 메시지 + 변경 파일 목록 추출
 
-   **b) 대화 내역 기반**
-   - 현재 대화에서 수행한 작업을 시간순 정리
-   - 사용한 스킬/커맨드 목록
-   - 주요 의사결정 사항
+   **b) 현재 활성 대화**
+   - 이 대화에서 수행한 작업, 사용한 스킬/커맨드, 의사결정 사항 정리
 
-   **c) 산출물**
-   - 생성/수정된 파일 목록
-   - 새 스킬, 커맨드, 설정 파일
-   - 외부 시스템 작업 (미리알림, Slack 등)
+   **c) 오늘의 Past Conversations 전체 검색**
+   - `~/.claude/projects/*/sessions-index.json`에서 오늘 날짜(`modified` 또는 `created`)에 해당하는 세션 필터링
+   - 세션 인덱스에 오늘 날짜가 없으면 파일시스템 mtime으로 fallback:
+     ```bash
+     touch -t YYYYMMDD0000 /tmp/today_marker
+     find ~/.claude/projects -maxdepth 2 -name "*.jsonl" -newer /tmp/today_marker -not -path "*/subagents/*"
+     ```
+   - 각 세션 JSONL에서 user 메시지와 assistant tool_use를 파싱하여 작업 내역 추출:
+     ```bash
+     python3 -c "
+     import json
+     for l in open('SESSION_FILE'):
+         d = json.loads(l)
+         role = d.get('role','')
+         if role == 'user':
+             msg = d.get('message',{})
+             content = msg.get('content','') if isinstance(msg, dict) else ''
+             if isinstance(content, list):
+                 for c in content:
+                     if isinstance(c, dict) and c.get('type')=='text':
+                         print('USER:', c['text'][:300])
+             elif isinstance(content, str):
+                 print('USER:', content[:300])
+         elif role == 'assistant':
+             msg = d.get('message',{})
+             content = msg.get('content','') if isinstance(msg, dict) else ''
+             if isinstance(content, list):
+                 for c in content:
+                     if isinstance(c, dict) and c.get('type')=='tool_use':
+                         print('TOOL:', c.get('name',''), json.dumps(c.get('input',{}), ensure_ascii=False)[:200])
+     "
+     ```
+   - 세션별로 주제, 수행 작업, 생성/수정 파일, 산출물을 요약
 
 3. 기존 내용과 중복 없이 병합하여 아래 형식으로 기록:
 
